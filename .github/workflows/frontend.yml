@@ -17,13 +17,10 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install pnpm globally and patch PATH
-        run: |
-          npm install -g pnpm
-          echo "$(npm bin -g)" >> $GITHUB_PATH
-
-      - name: Verify pnpm is available
-        run: pnpm --version
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 # Or your preferred version (e.g., 7, 9)
 
       - name: Install frontend dependencies
         working-directory: ./frontend
