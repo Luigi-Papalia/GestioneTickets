@@ -8,18 +8,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: pnpm
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
 
-    - name: Install pnpm
-      working-directory: frontend
-      run: 
-        npm install -g pnpm
-        pnpm install
-        pnpm run dev --host
+      - name: Enable and prepare pnpm (recommended way)
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Print pnpm version (verify install)
+        run: pnpm --version
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: pnpm install
+
+      - name: Start frontend dev server
+        working-directory: ./frontend
+        run: pnpm run dev --host
