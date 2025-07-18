@@ -1,0 +1,12 @@
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\controller\TicketController.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\dto\TicketDTO.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\model\GruppoInoltro.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\model\LavoratoDa.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\model\Ticket.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\model\TipoINC.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\repository\GruppoInoltroRepository.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\repository\LavoratoDaRepository.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\repository\TicketRepository.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\repository\TipoINCRepository.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\service\TicketService.java
+C:\Users\Garou\Desktop\APP_TICKET\backend\src\main\java\com\example\ticketbackend\TicketBackendApplication.java

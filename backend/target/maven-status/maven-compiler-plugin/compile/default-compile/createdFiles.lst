@@ -1,0 +1,12 @@
+com\example\ticketbackend\repository\TipoINCRepository.class
+com\example\ticketbackend\service\TicketService.class
+com\example\ticketbackend\repository\LavoratoDaRepository.class
+com\example\ticketbackend\controller\TicketController.class
+com\example\ticketbackend\repository\TicketRepository.class
+com\example\ticketbackend\dto\TicketDTO.class
+com\example\ticketbackend\model\GruppoInoltro.class
+com\example\ticketbackend\model\LavoratoDa.class
+com\example\ticketbackend\TicketBackendApplication.class
+com\example\ticketbackend\model\TipoINC.class
+com\example\ticketbackend\model\Ticket.class
+com\example\ticketbackend\repository\GruppoInoltroRepository.class
