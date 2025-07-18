@@ -31,11 +31,11 @@ jobs:
 
     - name: Inject env vars into SQL file
       run: |
-        envsubst < database/init.sql > rendered.sql
+        envsubst < database/init.sql > database/rendered.sql
 
     - name: Run SQL script inside MySQL container
       run: |
-        docker cp rendered.sql mysql-server:/tmp/rendered.sql
+        docker cp database/rendered.sql mysql-server:/tmp/rendered.sql
         docker exec mysql-server mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" < /tmp/rendered.sql
 
     - name: Stop Docker Compose
