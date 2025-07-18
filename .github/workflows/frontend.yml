@@ -18,12 +18,8 @@ jobs:
         cache: pnpm
 
     - name: Install pnpm
-      run: npm install -g pnpm
-
-    - name: Install frontend dependencies
       working-directory: frontend
-      run: pnpm install
-
-    - name: Start frontend dev server
-      working-directory: frontend
-      run: pnpm run dev --host
+      run: 
+        npm install -g pnpm
+        pnpm install
+        pnpm run dev --host
