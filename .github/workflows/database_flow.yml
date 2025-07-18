@@ -1,0 +1,43 @@
+name: MySQL Compose with SQL File
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  mysql-query:
+    runs-on: ubuntu-latest
+    env:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Start MySQL with Docker Compose
+      run: |
+        docker-compose up -d
+        echo "Waiting for MySQL to be ready..."
+        for i in {1..30}; do
+          if docker exec mysql-server mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "SELECT 1;" > /dev/null 2>&1; then
+            echo "MySQL is ready!"
+            break
+          fi
+          sleep 2
+        done
+
+    - name: Inject env vars into SQL file
+      run: |
+        envsubst < init.sql > rendered.sql
+
+    - name: Run SQL script inside MySQL container
+      run: |
+        docker cp rendered.sql mysql-server:/tmp/rendered.sql
+        docker exec mysql-server mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" < /tmp/rendered.sql
+
+    - name: Stop Docker Compose
+      if: always()
+      run: docker-compose down
