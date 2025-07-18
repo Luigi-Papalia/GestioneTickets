@@ -1,3 +1,9 @@
+CREATE DATABASE IF NOT EXISTS ticket_db;
+-- Create application user accessible from any host
+CREATE USER IF NOT EXISTS 'springuser'@'%' IDENTIFIED BY 'springpass';
+GRANT ALL PRIVILEGES ON ticket_db.* TO 'springuser'@'%';
+FLUSH PRIVILEGES;
+
 USE ticket_db;
 
 CREATE TABLE IF NOT EXISTS LavoratoDa (
