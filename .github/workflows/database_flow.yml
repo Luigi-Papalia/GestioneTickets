@@ -39,7 +39,7 @@ jobs:
     - name: Run SQL script inside MySQL container
       run: |
         docker cp database/rendered.sql mysql-server:/tmp/rendered.sql
-        docker exec mysql-server mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" < /tmp/rendered.sql
+        docker exec mysql-server bash -c "mysql -uroot -p${MYSQL_ROOT_PASSWORD} < /tmp/rendered.sql"
 
     - name: Stop Docker Compose
       if: always()
