@@ -1,6 +1,11 @@
 CREATE DATABASE IF NOT EXISTS ticket_db;
+CREATE USER IF NOT EXISTS 'springuser'@'localhost' IDENTIFIED BY 'springpass';
+GRANT ALL PRIVILEGES ON ticket_db.* TO 'springuser'@'%';
+FLUSH PRIVILEGES;
 
 USE ticket_db;
+
+
 
 CREATE TABLE IF NOT EXISTS LavoratoDa (
     id INT AUTO_INCREMENT PRIMARY KEY,
