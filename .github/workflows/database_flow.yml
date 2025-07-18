@@ -19,7 +19,7 @@ jobs:
 
     - name: Start MySQL with Docker Compose
       run: |
-        docker compose up -d -f /database
+        docker compose up -f /database/docker-compose.yaml -d 
         echo "Waiting for MySQL to be ready..."
         for i in {1..30}; do
           if docker exec mysql-server mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "SELECT 1;" > /dev/null 2>&1; then
