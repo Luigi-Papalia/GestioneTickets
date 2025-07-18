@@ -15,14 +15,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: 'npm'
 
-      - name: Enable and prepare pnpm (recommended way)
+      - name: Install pnpm globally
         run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
+          npm install -g pnpm
+          echo "$(npm bin -g)" >> $GITHUB_PATH
 
-      - name: Print pnpm version (verify install)
+      - name: Verify pnpm is available
         run: pnpm --version
 
       - name: Install frontend dependencies
