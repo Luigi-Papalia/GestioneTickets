@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,6 +40,18 @@ jobs:
             fi
             sleep 2
           done
+
+      - name: Inject env vars into SQL file
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
+          envsubst < database/init.sql > database/rendered.sql
+          ls -lh database/rendered.sql
+
+      - name: Run SQL script inside MySQL container
+        run: |
+          docker cp database/rendered.sql mysql-server:/tmp/rendered.sql
+          docker exec mysql-server bash -c "mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} < /tmp/rendered.sql"
 
       - name: Build and run backend
         working-directory: backend

@@ -62,11 +62,3 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: frontend/dist
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
-
-      - name: Stop services
-        if: always()
-        run: docker compose -f database/docker-compose.yml down
