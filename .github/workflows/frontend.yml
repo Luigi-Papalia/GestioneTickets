@@ -4,28 +4,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  frontend-dev:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'pnpm'
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8 # Or your preferred version (e.g., 7, 9)
+      - name: Install PNPM
+        run: npm install -g pnpm
 
-      - name: Install frontend dependencies
-        working-directory: ./frontend
+      - name: Install dependencies
         run: pnpm install
 
-      - name: Start frontend dev server
-        working-directory: ./frontend
-        run: pnpm run dev --host
+      - name: Build website
+        run: pnpm run build
+
+      - name: Upload build artifacts (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: |
+            dist/
+            .next/
+            build/
