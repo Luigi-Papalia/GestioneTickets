@@ -31,7 +31,7 @@ jobs:
 
     - name: Inject env vars into SQL file
       run: |
-        envsubst < init.sql > rendered.sql
+        envsubst < database/init.sql > rendered.sql
 
     - name: Run SQL script inside MySQL container
       run: |
