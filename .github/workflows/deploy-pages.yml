@@ -14,13 +14,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    env:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -28,26 +30,35 @@ jobs:
       - name: Install PNPM
         run: npm install -g pnpm
 
-      - name: Install dependencies
-        run: pnpm install
-        working-directory: frontend
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-      - name: Build
-        run: pnpm run build
+      - name: Start MySQL
+        run: |
+          docker compose -f database/docker-compose.yml up -d
+          echo "Waiting for MySQL to be ready..."
+          for i in {1..30}; do
+            if docker exec mysql-server mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "SELECT 1;" > /dev/null 2>&1; then
+              echo "MySQL is ready!"
+              break
+            fi
+            sleep 2
+          done
+
+      - name: Build backend
+        working-directory: backend
+        run: mvn clean package
+
+      - name: Build frontend
         working-directory: frontend
+        run: |
+          pnpm install
+          pnpm run build
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: frontend/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
