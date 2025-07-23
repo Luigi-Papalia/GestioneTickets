@@ -3,4 +3,4 @@ App per la gestione dei ticket
 
 ## Deploy su GitHub Pages
 Il frontend viene pubblicato automaticamente all'aggiornamento del branch `main` tramite GitHub Actions.
-Il workflow `deploy-pages.yml` avvia MySQL, compila il backend e costruisce il progetto in `frontend/` prima di caricare la cartella `dist` su GitHub Pages.
+Il workflow `deploy-pages.yml` avvia MySQL, compila il backend e costruisce il progetto in `/`.
